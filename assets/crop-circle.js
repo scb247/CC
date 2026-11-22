@@ -1,4 +1,4 @@
-/* Crop Circle theme scripts: mobile menu, hero thread preview, product designer, Catch the Glow game. */
+/* Crop Circle theme scripts: mobile menu, hero thread preview, product page preview, Catch the Glow game. */
 (function () {
   'use strict';
 
@@ -35,9 +35,9 @@
   function initHero() {
     var row = document.querySelector('[data-hero-threads]');
     if (!row) return;
-    var root = document.documentElement;
+    var hero = row.closest('.hero') || document.documentElement;
     row.querySelectorAll('button').forEach(function (b) {
-      var apply = function () { root.style.setProperty('--glow-rgb', b.dataset.glow); };
+      var apply = function () { hero.style.setProperty('--glow-rgb', b.dataset.glow); };
       b.addEventListener('mouseenter', apply);
       b.addEventListener('focus', apply);
       b.addEventListener('click', apply);
@@ -70,7 +70,6 @@
     var data = JSON.parse(dataEl.textContent);
     var variants = data.variants || [];
     var threadIndex = data.threadIndex;
-    var handle = root.dataset.productHandle;
 
     var form = root.querySelector('[data-product-form]');
     var idInput = root.querySelector('[data-variant-id]');
@@ -78,8 +77,6 @@
     var addBtn = root.querySelector('[data-add-btn]');
     var status = root.querySelector('[data-form-status]');
     var stage = root.querySelector('[data-stage]');
-    var patch = root.querySelector('.stage .patch');
-    var svg = root.querySelector('.stage .garment-art');
     var fieldsets = root.querySelectorAll('[data-option-index]');
 
     function selectedOptions() {
@@ -120,7 +117,7 @@
       var key = String(name || '').toLowerCase();
       var c = THREAD_COLOURS[key] || {};
       glow = glow || c.glow; hex = hex || c.hex;
-      if (glow) document.documentElement.style.setProperty('--glow-rgb', glow);
+      if (glow && stage) stage.style.setProperty('--glow-rgb', glow);
       if (hex && stage) stage.style.setProperty('--thread-hex', hex);
       var cap = root.querySelector('[data-caption-thread]');
       if (cap && name) cap.textContent = name;
@@ -191,54 +188,6 @@
         if (cap) cap.textContent = off ? 'Glowing in a dark room' : 'In daylight';
       });
     });
-
-    /* Logo placement, remembered per garment in this browser. */
-    var px = root.querySelector('[data-placement-x]');
-    var py = root.querySelector('[data-placement-y]');
-    var ps = root.querySelector('[data-placement-s]');
-    var propPos = root.querySelector('[data-prop-position]');
-    var propSize = root.querySelector('[data-prop-size]');
-    var placeKey = 'cc-placement-' + handle;
-    var base = svg ? {
-      x: Number(svg.dataset.baseX), y: Number(svg.dataset.baseY), s: Number(svg.dataset.baseScale)
-    } : null;
-
-    function describe(dx, dy) {
-      if (dx === 0 && dy === 0) return 'Centre';
-      var parts = [];
-      if (dx) parts.push((dx > 0 ? 'Right ' : 'Left ') + Math.abs(dx));
-      if (dy) parts.push((dy > 0 ? 'Down ' : 'Up ') + Math.abs(dy));
-      return parts.join(', ');
-    }
-
-    function applyPlacement(save) {
-      if (!px || !patch || !base) return;
-      var dx = Number(px.value), dy = Number(py.value), s = Number(ps.value);
-      patch.setAttribute('transform',
-        'translate(' + (base.x + dx) + ',' + (base.y + dy) + ') scale(' + (base.s * s / 100) + ')');
-      root.querySelector('[data-val-x]').textContent = dx;
-      root.querySelector('[data-val-y]').textContent = dy;
-      root.querySelector('[data-val-s]').textContent = s + '%';
-      var pos = describe(dx, dy);
-      if (propPos) propPos.value = pos;
-      if (propSize) propSize.value = s + '%';
-      var sum = root.querySelector('[data-summary-logo]');
-      if (sum) sum.textContent = pos + ', ' + s + '%';
-      if (save) store(placeKey, { x: dx, y: dy, s: s });
-    }
-
-    if (px) {
-      var saved = store(placeKey);
-      if (saved) { px.value = saved.x; py.value = saved.y; ps.value = saved.s; }
-      [px, py, ps].forEach(function (el) {
-        el.addEventListener('input', function () { applyPlacement(true); });
-      });
-      var reset = root.querySelector('[data-placement-reset]');
-      if (reset) reset.addEventListener('click', function () {
-        px.value = 0; py.value = 0; ps.value = 100; applyPlacement(true);
-      });
-      applyPlacement(false);
-    }
 
     /* Quantity */
     var qty = root.querySelector('[data-qty-input]');

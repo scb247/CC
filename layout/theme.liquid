@@ -28,9 +28,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     {{ 'crop-circle.css' | asset_url | stylesheet_tag }}
-    <style>
-      :root { --glow-rgb: {{ settings.default_glow_rgb | default: '57,255,107' }}; }
-    </style>
 
     {{ content_for_header }}
   </head>

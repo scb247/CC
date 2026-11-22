@@ -1,0 +1,53 @@
+{%- comment -%}
+  A blank garment photo with the glowing Crop Circle logo laid on top in the fixed spot.
+  Usage: {% render 'garment-photo', product: product, image: product.featured_media, garment: 'tee', width: 1200, sizes: '50vw' %}
+
+  Default logo spots, as % of the photo (wearer's left = viewer's right):
+    tee / long sleeve  left chest      x 62  y 30  size 11
+    hoodie             left chest      x 62  y 36  size 11
+    joggers            left pocket     x 63  y 18  size 9
+    shorts             left pocket     x 64  y 30  size 10
+  If a photo is framed differently, fine-tune per product with these product metafields (whole numbers):
+    custom.logo_x     % from the left edge of the photo to the logo centre
+    custom.logo_y     % from the top edge of the photo to the logo centre
+    custom.logo_size  logo width as % of the photo width
+{%- endcomment -%}
+{%- liquid
+  case garment
+    when 'hoodie'
+      assign lx = 62
+      assign ly = 36
+      assign lw = 11
+    when 'joggers'
+      assign lx = 63
+      assign ly = 18
+      assign lw = 9
+    when 'shorts'
+      assign lx = 64
+      assign ly = 30
+      assign lw = 10
+    else
+      assign lx = 62
+      assign ly = 30
+      assign lw = 11
+  endcase
+  if product.metafields.custom.logo_x != blank
+    assign lx = product.metafields.custom.logo_x.value
+  endif
+  if product.metafields.custom.logo_y != blank
+    assign ly = product.metafields.custom.logo_y.value
+  endif
+  if product.metafields.custom.logo_size != blank
+    assign lw = product.metafields.custom.logo_size.value
+  endif
+  capture patch_d
+    render 'patch-path'
+  endcapture
+  assign w = width | default: 800
+-%}
+<div class="photo-frame garment-photo">
+  {{ image | image_url: width: w | image_tag: loading: 'lazy', sizes: sizes, alt: image.alt | default: product.title }}
+  <svg class="photo-patch" viewBox="-24 -18 48 36" style="left:{{ lx }}%; top:{{ ly }}%; width:{{ lw }}%;" aria-hidden="true" focusable="false">
+    <path class="patch-logo" d="{{ patch_d | strip }}" fill-rule="evenodd"/>
+  </svg>
+</div>

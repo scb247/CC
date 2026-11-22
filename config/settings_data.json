@@ -1,10 +1,6 @@
 {
-  "current": {
-    "default_glow_rgb": "57,255,107"
-  },
+  "current": {},
   "presets": {
-    "Default": {
-      "default_glow_rgb": "57,255,107"
-    }
+    "Default": {}
   }
 }

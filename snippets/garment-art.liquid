@@ -1,38 +1,39 @@
 {%- comment -%}
   Flat drawing of a garment with the Crop Circle patch on it.
   Usage: {% render 'garment-art', garment: 'hoodie', patch_id: 'PatchGroup' %}
-  data-base-* give the default patch position; the designer moves it from there.
+  The logo position is fixed per garment (see below).
 {%- endcomment -%}
 {%- liquid
   capture patch_d
     render 'patch-path'
   endcapture
   assign patch_d = patch_d | strip
+  # Fixed logo spot. Wearer's left = viewer's right.
+  # Tops (tee, long sleeve, hoodie): left chest. Bottoms (joggers, shorts): left pocket area.
   case garment
     when 'hoodie'
-      assign bx = 110
-      assign by = 108
-      assign bs = 0.6
+      assign bx = 136
+      assign by = 96
+      assign bs = 0.36
     when 'longsleeve'
-      assign bx = 110
-      assign by = 95
-      assign bs = 0.6
+      assign bx = 130
+      assign by = 76
+      assign bs = 0.34
     when 'joggers'
-      assign bx = 84
-      assign by = 70
-      assign bs = 0.42
+      assign bx = 131
+      assign by = 48
+      assign bs = 0.3
     when 'shorts'
-      assign bx = 86
-      assign by = 95
-      assign bs = 0.42
+      assign bx = 141
+      assign by = 76
+      assign bs = 0.3
     else
-      assign bx = 110
-      assign by = 90
-      assign bs = 0.6
+      assign bx = 130
+      assign by = 72
+      assign bs = 0.34
   endcase
 -%}
-<svg class="garment-art" viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
-  data-base-x="{{ bx }}" data-base-y="{{ by }}" data-base-scale="{{ bs }}">
+<svg class="garment-art" viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
   {%- case garment -%}
     {%- when 'hoodie' -%}
       <path class="garment-shape" d="M60 30 L90 10 L130 10 L160 30 L200 55 L185 90 L160 78 L160 250 L60 250 L60 78 L35 90 L20 55 Z"/>

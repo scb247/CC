@@ -14,39 +14,6 @@
         "type": "image_picker",
         "id": "favicon",
         "label": "Favicon"
-      },
-      {
-        "type": "select",
-        "id": "default_glow_rgb",
-        "label": "Default glow colour",
-        "info": "Used on pages without a thread colour chosen.",
-        "options": [
-          {
-            "value": "57,255,107",
-            "label": "Green"
-          },
-          {
-            "value": "127,179,255",
-            "label": "Blue"
-          },
-          {
-            "value": "255,110,110",
-            "label": "Red"
-          },
-          {
-            "value": "255,251,234",
-            "label": "White"
-          },
-          {
-            "value": "255,156,199",
-            "label": "Pink"
-          },
-          {
-            "value": "255,177,87",
-            "label": "Orange"
-          }
-        ],
-        "default": "57,255,107"
       }
     ]
   }

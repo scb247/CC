@@ -60,7 +60,7 @@
           "type": "step",
           "settings": {
             "title": "We stitch and ship",
-            "text": "Your logo is embroidered to order in photoluminescent thread, then packed and sent to you."
+            "text": "Your logo is embroidered to order in photoluminescent thread on the left chest (tops) or left pocket (bottoms), then packed and sent to you."
           }
         }
       },
@@ -102,8 +102,8 @@
         "q4": {
           "type": "question",
           "settings": {
-            "question": "Can I choose where the logo goes?",
-            "answer": "<p>Yes. On each product page, use \"Place your logo\" to move it left, right, up or down and change its size. We stitch it where you put it.</p>"
+            "question": "Where does the logo go?",
+            "answer": "<p>On tees, long sleeves and hoodies it's stitched on the left chest. On joggers and shorts it goes on the left pocket area.</p>"
           }
         },
         "q5": {

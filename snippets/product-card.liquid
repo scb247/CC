@@ -7,7 +7,7 @@
 <a class="card" href="{{ product.url }}">
   <div class="card-media">
     {%- if product.featured_media -%}
-      {{ product.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(min-width: 900px) 25vw, 50vw', widths: '300, 450, 600', alt: product.featured_media.alt | default: product.title }}
+      {% render 'garment-photo', product: product, image: product.featured_media, garment: garment, width: 600, sizes: '(min-width: 900px) 25vw, 50vw' %}
     {%- else -%}
       {% render 'garment-art', garment: garment %}
     {%- endif -%}
