@@ -1,0 +1,35 @@
+<section class="section" id="play">
+  <div class="container">
+    <div class="section-head">
+      <h2>{{ section.settings.heading | escape }}</h2>
+      <p>{{ section.settings.text | escape }}</p>
+    </div>
+    <div class="game-wrap" data-glow-game>
+      <div class="game-hud">
+        <div class="stat">Score<b data-score>0</b></div>
+        <div class="stat">Best<b data-best>0</b></div>
+        <div class="stat">Misses<b><span data-misses>0</span>/5</b></div>
+        <button class="btn btn-primary" type="button" data-start>Start game</button>
+      </div>
+      <div class="game-area">
+        <canvas class="game-canvas" width="960" height="540" aria-label="Catch the Glow game area"></canvas>
+        <div class="game-overlay" data-overlay>
+          <h3 data-overlay-title>Catch the Glow</h3>
+          <p data-overlay-text>Tap the glowing orbs before they fall past the bottom.</p>
+          <button class="btn btn-glow" type="button" data-start>Start game</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Catch the Glow game",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Catch the Glow" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Orbs fall in our six thread colours. Tap them before they hit the ground. Miss five and it's game over." }
+  ],
+  "presets": [ { "name": "Catch the Glow game" } ]
+}
+{% endschema %}

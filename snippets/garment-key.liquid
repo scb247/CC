@@ -1,0 +1,27 @@
+{%- comment -%}
+  Works out which garment drawing to show for a product.
+  Outputs one of: hoodie, tee, longsleeve, joggers, shorts
+  Priority: product metafield custom.garment -> product type -> handle/title.
+  Usage: {%- capture garment -%}{% render 'garment-key', product: product %}{%- endcapture -%}
+{%- endcomment -%}
+{%- liquid
+  assign key = ''
+  if product.metafields.custom.garment != blank
+    assign key = product.metafields.custom.garment.value | downcase | strip
+  endif
+  if key == ''
+    assign haystack = product.type | append: ' ' | append: product.handle | append: ' ' | append: product.title | downcase
+    if haystack contains 'hood'
+      assign key = 'hoodie'
+    elsif haystack contains 'long'
+      assign key = 'longsleeve'
+    elsif haystack contains 'jog'
+      assign key = 'joggers'
+    elsif haystack contains 'short'
+      assign key = 'shorts'
+    else
+      assign key = 'tee'
+    endif
+  endif
+  echo key
+-%}

@@ -1,0 +1,65 @@
+{%- comment -%}
+  Flat drawing of a garment with the Crop Circle patch on it.
+  Usage: {% render 'garment-art', garment: 'hoodie', patch_id: 'PatchGroup' %}
+  data-base-* give the default patch position; the designer moves it from there.
+{%- endcomment -%}
+{%- liquid
+  capture patch_d
+    render 'patch-path'
+  endcapture
+  assign patch_d = patch_d | strip
+  case garment
+    when 'hoodie'
+      assign bx = 110
+      assign by = 108
+      assign bs = 0.6
+    when 'longsleeve'
+      assign bx = 110
+      assign by = 95
+      assign bs = 0.6
+    when 'joggers'
+      assign bx = 84
+      assign by = 70
+      assign bs = 0.42
+    when 'shorts'
+      assign bx = 86
+      assign by = 95
+      assign bs = 0.42
+    else
+      assign bx = 110
+      assign by = 90
+      assign bs = 0.6
+  endcase
+-%}
+<svg class="garment-art" viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
+  data-base-x="{{ bx }}" data-base-y="{{ by }}" data-base-scale="{{ bs }}">
+  {%- case garment -%}
+    {%- when 'hoodie' -%}
+      <path class="garment-shape" d="M60 30 L90 10 L130 10 L160 30 L200 55 L185 90 L160 78 L160 250 L60 250 L60 78 L35 90 L20 55 Z"/>
+      <path class="garment-shade" d="M60 78 L60 250 L80 250 L80 78 Z"/>
+      <circle class="garment-line" cx="110" cy="45" r="16"/>
+      <path class="garment-stitch" d="M80 190 L140 190 M80 190 L74 236 M140 190 L146 236"/>
+    {%- when 'longsleeve' -%}
+      <path class="garment-shape" d="M75 20 L95 10 L125 10 L145 20 L178 40 L208 180 L182 188 L150 82 L150 235 L70 235 L70 82 L38 188 L12 180 L42 40 Z"/>
+      <path class="garment-shade" d="M70 82 L70 235 L86 235 L86 82 Z"/>
+      <ellipse class="garment-line" cx="110" cy="30" rx="18" ry="9"/>
+      <path class="garment-stitch" d="M184 172 L206 166 M36 172 L14 166"/>
+    {%- when 'joggers' -%}
+      <path class="garment-shape" d="M75 15 L145 15 L150 100 L185 240 L150 245 L125 130 L110 130 L95 245 L60 240 L75 100 Z"/>
+      <path class="garment-shade" d="M75 15 L95 15 L92 130 L75 100 Z"/>
+      <path class="garment-stitch" d="M75 30 L145 30"/>
+      <path class="garment-stitch" d="M62 228 L95 232 M150 232 L183 228"/>
+    {%- when 'shorts' -%}
+      <path class="garment-shape" d="M60 40 L160 40 L172 168 L122 178 L110 108 L98 178 L48 168 Z"/>
+      <path class="garment-shade" d="M60 40 L80 40 L76 120 L52 150 Z"/>
+      <path class="garment-stitch" d="M60 56 L160 56"/>
+      <path class="garment-stitch" d="M106 56 L106 72 M114 56 L114 72"/>
+    {%- else -%}
+      <path class="garment-shape" d="M75 20 L95 10 L125 10 L145 20 L188 40 L172 76 L150 64 L150 220 L70 220 L70 64 L48 76 L32 40 Z"/>
+      <path class="garment-shade" d="M70 64 L70 220 L86 220 L86 64 Z"/>
+      <ellipse class="garment-line" cx="110" cy="30" rx="18" ry="9"/>
+  {%- endcase -%}
+  <g class="patch"{% if patch_id %} id="{{ patch_id }}"{% endif %} transform="translate({{ bx }},{{ by }}) scale({{ bs }})">
+    <path class="patch-logo" d="{{ patch_d }}" fill-rule="evenodd"/>
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+{%- liquid
+  assign collection_source = section.settings.collection
+  if collection_source == blank
+    assign collection_source = collections['all']
+  endif
+-%}
+<section class="section" id="shop">
+  <div class="container">
+    <div class="section-head">
+      <h2>{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
+    </div>
+    {%- if collection_source.products.size > 0 -%}
+      <ul class="product-grid" role="list">
+        {%- for product in collection_source.products limit: section.settings.limit -%}
+          <li>{% render 'product-card', product: product %}</li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      {%- comment -%} No products yet: show the five garments as placeholders so the page still makes sense in the editor. {%- endcomment -%}
+      <ul class="product-grid" role="list">
+        {%- assign placeholders = 'tee:T-shirt,longsleeve:Long sleeve tee,hoodie:Hoodie,joggers:Joggers,shorts:Shorts' | split: ',' -%}
+        {%- for p in placeholders -%}
+          {%- assign parts = p | split: ':' -%}
+          <li>
+            <div class="card">
+              <div class="card-media">{% render 'garment-art', garment: parts[0] %}</div>
+              <div class="card-body"><span class="card-title">{{ parts[1] }}</span><span class="card-price">Add products in Shopify admin</span></div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Core range",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The core range" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Five essentials, heavyweight black cotton, embroidered in the glow thread of your choice." },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty to show all products." },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 5 }
+  ],
+  "presets": [ { "name": "Core range" } ]
+}
+{% endschema %}

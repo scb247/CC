@@ -1,0 +1,33 @@
+{%- comment -%}
+  Product tile for grids. Shows the product photo if there is one, otherwise a glowing garment drawing.
+  Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+{%- capture garment -%}{% render 'garment-key', product: product %}{%- endcapture -%}
+{%- assign garment = garment | strip -%}
+<a class="card" href="{{ product.url }}">
+  <div class="card-media">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(min-width: 900px) 25vw, 50vw', widths: '300, 450, 600', alt: product.featured_media.alt | default: product.title }}
+    {%- else -%}
+      {% render 'garment-art', garment: garment %}
+    {%- endif -%}
+  </div>
+  <div class="card-body">
+    <span class="card-title">{{ product.title | escape }}</span>
+    <span class="card-price">
+      {%- if product.price_varies -%}From {% endif -%}
+      {{ product.price_min | money }}
+    </span>
+    {%- for option in product.options_with_values -%}
+      {%- assign option_name = option.name | downcase -%}
+      {%- if option_name contains 'thread' or option_name contains 'colour' or option_name contains 'color' -%}
+        <span class="card-dots" aria-label="{{ option.values.size }} thread colours">
+          {%- for value in option.values -%}
+            <span style="background:{% render 'thread-colour', name: value, part: 'hex' %}" title="{{ value | escape }}"></span>
+          {%- endfor -%}
+        </span>
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</a>

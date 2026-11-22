@@ -1,0 +1,39 @@
+{%- comment -%}
+  Returns one value for a thread colour.
+  Usage: {% render 'thread-colour', name: 'Green', part: 'hex' %}
+  part: 'hex'  -> swatch colour in daylight (e.g. #2E9E52)
+        'glow' -> glow colour in the dark as "r,g,b" (e.g. 57,255,107)
+  Unknown names fall back to green so a typo never breaks the page.
+  To add a thread colour: add a "when" line here AND in THREAD_COLOURS in assets/crop-circle.js.
+{%- endcomment -%}
+{%- liquid
+  assign key = name | downcase | strip
+  case key
+    when 'blue'
+      assign hex = '#2F6FED'
+      assign glow = '127,179,255'
+    when 'green'
+      assign hex = '#2E9E52'
+      assign glow = '57,255,107'
+    when 'red'
+      assign hex = '#E5484D'
+      assign glow = '255,110,110'
+    when 'white'
+      assign hex = '#EDE6D3'
+      assign glow = '255,251,234'
+    when 'pink'
+      assign hex = '#EC6BA3'
+      assign glow = '255,156,199'
+    when 'orange'
+      assign hex = '#F0932B'
+      assign glow = '255,177,87'
+    else
+      assign hex = '#2E9E52'
+      assign glow = '57,255,107'
+  endcase
+  if part == 'glow'
+    echo glow
+  else
+    echo hex
+  endif
+-%}

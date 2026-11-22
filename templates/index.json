@@ -1,0 +1,142 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "f1": {
+          "type": "fact",
+          "settings": {
+            "icon": "sun",
+            "title": "Charges under any light",
+            "text": "Sunlight, lamps or your phone torch."
+          }
+        },
+        "f2": {
+          "type": "fact",
+          "settings": {
+            "icon": "moon",
+            "title": "Glows for hours",
+            "text": "Photoluminescent thread, no batteries."
+          }
+        },
+        "f3": {
+          "type": "fact",
+          "settings": {
+            "icon": "needle",
+            "title": "Stitched to order",
+            "text": "Every piece embroidered in your thread colour."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "settings": {}
+    },
+    "range": {
+      "type": "core-range",
+      "settings": {}
+    },
+    "how": {
+      "type": "how-it-works",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Pick your garment",
+            "text": "Tee, long sleeve, hoodie, joggers or shorts. All heavyweight black cotton, so the glow pops."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Choose your thread",
+            "text": "Blue, green, red, white, pink or orange. Flip the lights off in the preview to see how it glows."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "We stitch and ship",
+            "text": "Your logo is embroidered to order in photoluminescent thread, then packed and sent to you."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {}
+    },
+    "play": {
+      "type": "glow-game",
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How does the glow work?",
+            "answer": "<p>The thread is photoluminescent. It soaks up light from the sun, a lamp or a phone torch, then gives it back as a glow in the dark. No batteries or wiring.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Which colours glow brightest?",
+            "answer": "<p>Green glows brightest and longest. White and pink are softer, so they suit a subtler look.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Will my piece look exactly like the preview?",
+            "answer": "<p>The preview is a close guide. Real brightness and glow time depend on the fabric and how long the thread has been charged.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I choose where the logo goes?",
+            "answer": "<p>Yes. On each product page, use \"Place your logo\" to move it left, right, up or down and change its size. We stitch it where you put it.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "How long until it arrives?",
+            "answer": "<p>Every piece is stitched to order. Allow 5–7 working days before dispatch.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "How do I wash it?",
+            "answer": "<p>Turn it inside out, wash cool at 30°, and don't iron over the embroidery.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "range",
+    "how",
+    "play",
+    "faq"
+  ]
+}

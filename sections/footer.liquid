@@ -1,0 +1,43 @@
+<footer class="site-footer" id="contact">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="{{ 'crop-circle-logo.png' | asset_url }}" alt="{{ shop.name | escape }}" width="77" height="40" loading="lazy">
+        <p>{{ section.settings.tagline | escape }}</p>
+      </div>
+      <div class="foot-col">
+        <h2>{{ section.settings.menu_heading | escape }}</h2>
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}">{{ link.title | escape }}</a>
+        {%- endfor -%}
+      </div>
+      <div class="foot-col">
+        <h2>Contact</h2>
+        {%- if section.settings.email != blank -%}
+          <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+        {%- endif -%}
+        {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" rel="noopener" target="_blank">Instagram</a>{%- endif -%}
+        {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" rel="noopener" target="_blank">TikTok</a>{%- endif -%}
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>{{ section.settings.disclaimer | escape }}</p>
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Glow-in-the-dark embroidery, stitched to order." },
+    { "type": "text", "id": "menu_heading", "label": "Menu heading", "default": "Explore" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" },
+    { "type": "text", "id": "email", "label": "Contact email", "default": "hello@cropcircle.example" },
+    { "type": "url", "id": "instagram", "label": "Instagram link" },
+    { "type": "url", "id": "tiktok", "label": "TikTok link" },
+    { "type": "text", "id": "disclaimer", "label": "Small print", "default": "Previews are a guide. Real glow depends on fabric and how long the thread has charged." }
+  ]
+}
+{% endschema %}

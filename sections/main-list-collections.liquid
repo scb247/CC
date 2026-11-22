@@ -1,0 +1,28 @@
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h1>Collections</h1></div>
+    <ul class="product-grid" role="list">
+      {%- for collection in collections -%}
+        <li>
+          <a class="card" href="{{ collection.url }}">
+            <div class="card-media">
+              {%- if collection.featured_image -%}
+                {{ collection.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: collection.title }}
+              {%- else -%}
+                {% render 'garment-art', garment: 'tee' %}
+              {%- endif -%}
+            </div>
+            <div class="card-body">
+              <span class="card-title">{{ collection.title | escape }}</span>
+              <span class="card-price">{{ collection.products_count }} products</span>
+            </div>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Collections list", "settings": [] }
+{% endschema %}

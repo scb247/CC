@@ -1,0 +1,10 @@
+{%- comment -%} Small outline icon for the garment picker. Usage: {% render 'garment-icon', garment: 'tee' %} {%- endcomment -%}
+<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {%- case garment -%}
+    {%- when 'hoodie' -%}<path d="M10 6l4-2h4l4 2 6 4-2 5-4-2v15H10V13l-4 2-2-5z"/><circle cx="16" cy="8" r="2.5"/>
+    {%- when 'longsleeve' -%}<path d="M11 5l3-1.5h4L21 5l4 2.5 4 16-3.5 1L22 12v15H10V12l-3.5 12.5L3 23.5l4-16z"/>
+    {%- when 'joggers' -%}<path d="M10 3h12l1 10 4 16-5 .5-4-13h-4l-4 13-5-.5 4-16z"/>
+    {%- when 'shorts' -%}<path d="M8 7h16l2 16-8 1.5L16 14l-2 10.5L6 23z"/><path d="M8 10h16"/>
+    {%- else -%}<path d="M11 5l3-1.5h4L21 5l6 3-2 5-3-1.5V25H10V11.5L7 13l-2-5z"/>
+  {%- endcase -%}
+</svg>

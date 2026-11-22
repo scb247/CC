@@ -1,0 +1,99 @@
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h1>Your cart</h1></div>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <table class="cart-table">
+          <thead>
+            <tr><th scope="col">Item</th><th scope="col" class="price-col">Price</th><th scope="col">Qty</th><th scope="col">Total</th></tr>
+          </thead>
+          <tbody>
+            {%- for item in cart.items -%}
+              {%- liquid
+                capture garment
+                  render 'garment-key', product: item.product
+                endcapture
+                assign garment = garment | strip
+                assign glow = '57,255,107'
+                for option in item.options_with_values
+                  assign option_name = option.name | downcase
+                  if option_name contains 'thread' or option_name contains 'colour' or option_name contains 'color'
+                    capture glow
+                      render 'thread-colour', name: option.value, part: 'glow'
+                    endcapture
+                  endif
+                endfor
+              -%}
+              <tr>
+                <td>
+                  <div class="cart-item">
+                    <div class="cart-thumb" style="--glow-rgb: {{ glow | strip }};">
+                      {%- if item.image -%}
+                        {{ item.image | image_url: width: 200 | image_tag: alt: item.title, loading: 'lazy' }}
+                      {%- else -%}
+                        {% render 'garment-art', garment: garment %}
+                      {%- endif -%}
+                    </div>
+                    <div>
+                      <a href="{{ item.url }}">{{ item.product.title | escape }}</a>
+                      <ul class="cart-props">
+                        {%- unless item.product.has_only_default_variant -%}
+                          {%- for option in item.options_with_values -%}
+                            <li>{{ option.name | escape }}: {{ option.value | escape }}</li>
+                          {%- endfor -%}
+                        {%- endunless -%}
+                        {%- for property in item.properties -%}
+                          {%- assign first_char = property.first | slice: 0 -%}
+                          {%- if property.last != blank and first_char != '_' -%}
+                            <li>{{ property.first | escape }}: {{ property.last | escape }}</li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                      <a class="cart-remove" href="{{ item.url_to_remove }}">Remove</a>
+                    </div>
+                  </div>
+                </td>
+                <td class="price-col">{{ item.final_price | money }}</td>
+                <td>
+                  <label class="visually-hidden" for="Qty-{{ forloop.index }}">Quantity for {{ item.product.title | escape }}</label>
+                  <input class="cart-qty" id="Qty-{{ forloop.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0">
+                </td>
+                <td>{{ item.final_line_price | money }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+
+        <div class="cart-footer">
+          <div class="cart-totals">
+            {%- if section.settings.show_note -%}
+              <div class="cart-note field">
+                <label for="CartNote">Anything we should know?</label>
+                <textarea id="CartNote" name="note">{{ cart.note }}</textarea>
+              </div>
+            {%- endif -%}
+            <div class="row"><span>Subtotal</span><strong>{{ cart.total_price | money_with_currency }}</strong></div>
+            <p>Taxes and shipping calculated at checkout.</p>
+            <button class="btn btn-ghost btn-block" type="submit" name="update">Update cart</button>
+            <button class="btn btn-glow btn-block" type="submit" name="checkout">Checkout</button>
+          </div>
+        </div>
+      </form>
+    {%- else -%}
+      <div class="empty-state">
+        <p>Your cart is empty.</p>
+        <a class="btn btn-glow" href="{{ routes.all_products_collection_url }}">Shop the range</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    { "type": "checkbox", "id": "show_note", "label": "Show order note", "default": true }
+  ]
+}
+{% endschema %}
